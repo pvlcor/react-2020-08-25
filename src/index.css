@@ -15,3 +15,33 @@ code {
 button {
   outline: none;
 }
+
+p {
+  margin: 0;
+}
+
+.restaurant {
+  margin-top: 32px;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.restaurant div {
+  margin-right: 32px;
+}
+
+.reviews {
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.product {
+  margin-bottom: 32px;
+}
+
+.product:last-child {
+  margin-bottom: 0;
+}
