@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
+import Order from '../order';
 import Navigation from '../navigation';
 
 const Restaurants = ({ restaurants }) => {
@@ -13,6 +14,7 @@ const Restaurants = ({ restaurants }) => {
 
   return (
     <div>
+      <Order restaurants={restaurants} />
       <Navigation
         restaurants={restaurants}
         onRestaurantClick={setActiveRestaurant}
