@@ -11,16 +11,6 @@ const orderSelector = (state) => state.order;
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
 
-export const productsLoadingSelector = (state, props) =>
-  state.products.loading[props.restaurantId];
-export const productsLoadedSelector = (state, props) =>
-  state.products.loaded[props.restaurantId];
-
-export const reviewsLoadingSelector = (state, props) =>
-  state.reviews.loading[props.restaurantId];
-export const reviewsLoadedSelector = (state, props) =>
-  state.reviews.loaded[props.restaurantId];
-
 export const usersLoadingSelector = (state) => state.users.loading;
 export const usersLoadedSelector = (state) => state.users.loaded;
 
@@ -66,4 +56,54 @@ export const totalSelector = createSelector(
   orderProductsSelector,
   (orderProducts) =>
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
+);
+
+export const restaurantIdSelector = (_, { restaurantId, match }) =>
+  restaurantId || match.params.restId;
+
+export const productsLoadingSelector = createSelector(
+  restaurantIdSelector,
+  (state, _) => state.products.loading,
+  (id, productsLoading) => productsLoading[id]
+);
+
+export const productsLoadedSelector = createSelector(
+  restaurantIdSelector,
+  (state, _) => state.products.loaded,
+  (id, productsLoaded) => productsLoaded[id]
+);
+
+const restaurantSelector = createSelector(
+  restaurantIdSelector,
+  restaurantsSelector,
+  (id, restaurants) => restaurants[id]
+);
+
+export const restaurantMenuSelector = createSelector(
+  restaurantSelector,
+  (restaurant) => restaurant.menu
+);
+
+export const restaurantReviewsSelector = createSelector(
+  restaurantSelector,
+  (restaurant) => restaurant.reviews
+);
+
+export const reviewsLoadedSelector = createSelector(
+  restaurantIdSelector,
+  (state, _) => state.reviews.loaded,
+  (id, reviewsLoaded) => reviewsLoaded[id]
+);
+
+export const reviewsLoadingSelector = createSelector(
+  restaurantIdSelector,
+  (state, _) => state.reviews.loading,
+  (id, reviewsLoading) => reviewsLoading[id]
+);
+
+export const restaurantIdByProductId = createSelector(
+  (_, props) => props.product.id,
+  restaurantsListSelector,
+  (productId, restaurants) =>
+    restaurants.find((restaurant) => restaurant.menu.includes(productId))?.id
 );

@@ -10,6 +10,8 @@ import { loadReviews, loadUsers } from '../../redux/actions';
 import {
   reviewsLoadedSelector,
   usersLoadedSelector,
+  restaurantReviewsSelector,
+  restaurantIdSelector,
 } from '../../redux/selectors';
 
 import Loader from '../loader';
@@ -47,6 +49,8 @@ Reviews.propTypes = {
 const mapStateToProps = createStructuredSelector({
   reviewsLoaded: reviewsLoadedSelector,
   usersLoaded: usersLoadedSelector,
+  reviews: restaurantReviewsSelector,
+  restaurantId: restaurantIdSelector,
 });
 
 export default connect(mapStateToProps, { loadReviews, loadUsers })(Reviews);

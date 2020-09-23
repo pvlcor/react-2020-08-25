@@ -7,6 +7,8 @@ import { loadProducts } from '../../redux/actions';
 import {
   productsLoadingSelector,
   productsLoadedSelector,
+  restaurantMenuSelector,
+  restaurantIdSelector,
 } from '../../redux/selectors';
 
 import Loader from '../loader';
@@ -17,7 +19,7 @@ import Basket from '../basket';
 
 class Menu extends React.Component {
   static propTypes = {
-    menu: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    menu: PropTypes.arrayOf(PropTypes.string).isRequired,
   };
 
   state = { error: null };
@@ -44,7 +46,7 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { menu, loading } = this.props;
+    const { menu = [], loading } = this.props;
 
     if (loading) {
       return <Loader />;
@@ -73,6 +75,8 @@ export default connect(
   createStructuredSelector({
     loading: productsLoadingSelector,
     loaded: productsLoadedSelector,
+    menu: restaurantMenuSelector,
+    restaurantId: restaurantIdSelector,
   }),
   { loadProducts }
 )(Menu);
