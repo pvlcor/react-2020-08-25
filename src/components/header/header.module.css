@@ -13,3 +13,14 @@
   right: 20px;
   top: 0;
 }
+
+.currencies {
+  position: absolute;
+  color: var(--white);
+  left: 20px;
+}
+
+.currency {
+  cursor: pointer;
+  margin-right: 8px;
+}

@@ -1,6 +1,7 @@
 .basket {
   padding: 13px 16px 20px;
   background-color: var(--pink);
+  position: relative;
 }
 
 .basket a {
@@ -20,6 +21,15 @@
 
 .button {
   margin-top: 22px;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgb(255 255 255 / 70%);
+  top: 0;
+  left: 0;
 }
 
 @media all and (max-width: 767px) {

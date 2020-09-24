@@ -4,3 +4,18 @@
   max-width: 884px;
   width: 100%;
 }
+
+.list {
+  margin-bottom: 26px;
+}
+
+.enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.enterActive {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 250ms;
+}

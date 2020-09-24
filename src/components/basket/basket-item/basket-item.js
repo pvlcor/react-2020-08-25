@@ -38,7 +38,7 @@ function BasketItem({
             small
           />
         </div>
-        <p className={cn(styles.count, styles.price)}>{subtotal} $</p>
+        <p className={cn(styles.count, styles.price)}>{subtotal}</p>
         <Button
           onClick={() => remove(product.id)}
           icon="delete"

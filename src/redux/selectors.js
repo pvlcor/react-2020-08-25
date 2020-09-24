@@ -6,7 +6,7 @@ const productsSelector = (state) => state.products.entities;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
 
-const orderSelector = (state) => state.order;
+const orderSelector = (state) => state.order.entities;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -82,3 +82,11 @@ export const totalSelector = createSelector(
   (orderProducts) =>
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
+
+export const makeOrderInProgressSelector = (state) => state.order.inProgress;
+export const orderProductsListSelector = createSelector(
+  orderSelector,
+  (order) => Object.entries(order).map(([id, amount]) => ({ id, amount }))
+);
+
+export const makeOrderErrorSelector = (state) => state.order.error;

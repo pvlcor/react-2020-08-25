@@ -1,4 +1,4 @@
-import { replace } from 'connected-react-router';
+import { replace, push } from 'connected-react-router';
 
 import {
   INCREMENT,
@@ -9,6 +9,7 @@ import {
   LOAD_REVIEWS,
   LOAD_PRODUCTS,
   LOAD_USERS,
+  MAKE_ORDER,
   REQUEST,
   SUCCESS,
   FAILURE,
@@ -18,6 +19,8 @@ import {
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  makeOrderInProgressSelector,
+  orderProductsListSelector,
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, payload: { id } });
@@ -67,4 +70,37 @@ export const loadUsers = (restaurantId) => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch({ type: LOAD_USERS, CallAPI: '/api/users' });
+};
+
+export const makeOrder = () => async (dispatch, getState) => {
+  const state = getState();
+  const inProgress = makeOrderInProgressSelector(state);
+  const products = orderProductsListSelector(state);
+  const requestParams = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(products),
+  };
+
+  if (inProgress) return;
+
+  dispatch({ type: MAKE_ORDER + REQUEST });
+
+  try {
+    const response = await fetch('/api/order', requestParams).then(
+      async (res) => {
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data);
+        }
+        return data;
+      }
+    );
+
+    dispatch({ type: MAKE_ORDER + SUCCESS, response });
+    dispatch(replace('/checkout/result'));
+  } catch (error) {
+    dispatch({ type: MAKE_ORDER + FAILURE, error });
+    dispatch(push('/checkout/result'));
+  }
 };
